@@ -1,0 +1,60 @@
+#include <conio.h>
+#include "ship.h"
+#include "renderer.h"
+
+int main()
+{
+    Ship ship(screenWidth / 2 - 7, screenHeight - 13); // создание корабля с начальной позицией (10, 10)
+
+    // инициализация переднего и заднего буферов
+    for (int i = 0; i < screenWidth * screenHeight; i++)
+    {
+        backBuffer[i].Char.AsciiChar = ' ';
+        backBuffer[i].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED;
+
+        frontBuffer[i].Char.AsciiChar = ' ';
+        frontBuffer[i].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED;
+    }
+
+    while (true) // бесконечный игровой цикл
+    {
+        // Обработка ввода от игрока
+        if (_kbhit()) // если игрок нажал клавишу
+        {
+            int key = _getch(); // получить код нажатой клавиши
+            if (key == 224) // если нажата клавиша со стрелкой
+            {
+                key = _getch(); // получить код нажатой клавиши со стрелкой
+                if (key == 72) // если нажата клавиша со стрелкой вверх
+                {
+                    ship.moveUp(); // переместить корабль вверх
+                }
+                else if (key == 80) // если нажата клавиша со стрелкой вниз
+                {
+                    ship.moveDown(); // переместить корабль вниз
+                }
+                else if (key == 75) // если нажата клавиша со стрелкой влево
+                {
+                    ship.moveLeft(); // переместить корабль влево
+                }
+                else if (key == 77) // если нажата клавиша со стрелкой вправо
+                {
+                    ship.moveRight(); // переместить корабль вправо
+                }
+            }
+        }
+
+        // Отображение игрового экрана
+        ship.draw(); // отобразить корабль на экране
+
+        // обмен местами переднего и заднего буферов
+        swapBuffers();
+
+        // отображение содержимого заднего буфера на экране
+        displayBackBuffer();
+
+        Sleep(20); // задержка для управления скоростью игрового цикла
+    }
+
+    return 0;
+}
