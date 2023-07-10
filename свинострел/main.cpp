@@ -1,11 +1,11 @@
 #include <conio.h>
 #include "ship.h"
 #include "renderer.h"
-
+#include "Svin.h"
 int main()
 {
     Ship ship(screenWidth / 2 - 7, screenHeight - 13); // создание корабля с начальной позицией (10, 10)
-
+    Svin svinka1(100, 5); // создание свинки с начальной позицией (100, 5)
     // инициализация переднего и заднего буферов
     for (int i = 0; i < screenWidth * screenHeight; i++)
     {
@@ -43,10 +43,13 @@ int main()
                 }
             }
         }
-
+        
+        //перемещение свинки 
+        svinka1.moving();
+        
         // Отображение игрового экрана
         ship.draw(); // отобразить корабль на экране
-
+        svinka1.draw(); // отобразить свинку на экране
         // обмен местами переднего и заднего буферов
         swapBuffers();
 
