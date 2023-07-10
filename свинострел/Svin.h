@@ -4,9 +4,9 @@
 class Svin
 {
 public:
-    double x, y; // позиция свина по осям X и Y
-    Svin(double startX, double startY); // конструктор
-    void moving(); // перемещение свина (авто)
-    void draw(); // отобразить свина на экране
+    double x, y; // РїРѕР·РёС†РёСЏ СЃРІРёРЅР° РїРѕ РѕСЃСЏРј X Рё Y
+    Svin(double startX, double startY); // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+    void moving(); // РїРµСЂРµРјРµС‰РµРЅРёРµ СЃРІРёРЅР° (Р°РІС‚Рѕ)
+    void draw(); // РѕС‚РѕР±СЂР°Р·РёС‚СЊ СЃРІРёРЅР° РЅР° СЌРєСЂР°РЅРµ
 };
 #endif
