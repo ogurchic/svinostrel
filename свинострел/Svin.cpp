@@ -5,13 +5,13 @@
 
 
 
-Svin::Svin(double startX, double startY) // конструктор
+Svin::Svin(double startX, double startY) // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 {
     x = startX;
     y = startY;
 }
 
-void Svin::moving() // перемещение свина
+void Svin::moving() // РїРµСЂРµРјРµС‰РµРЅРёРµ СЃРІРёРЅР°
 {
     if (y < screenHeight)
     {
@@ -21,7 +21,7 @@ void Svin::moving() // перемещение свина
     }
 }
 
-void Svin::draw() // отобразить свина на экране
+void Svin::draw() // РѕС‚РѕР±СЂР°Р·РёС‚СЊ СЃРІРёРЅР° РЅР° СЌРєСЂР°РЅРµ
 {
     drawString(x, y, " ^..^ ", frontBuffer);
     drawString(x, y + 1, " (00) ", frontBuffer);
