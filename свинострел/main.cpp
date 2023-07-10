@@ -1,11 +1,17 @@
+//main.cpp
 #include <conio.h>
 #include "ship.h"
 #include "renderer.h"
 #include "Svin.h"
+#unclude "bullet.h"
+#include <vector>
+
 int main()
 {
     Ship ship(screenWidth / 2 - 7, screenHeight - 13); // создание корабля с начальной позицией (10, 10)
     Svin svinka1(100, 5); // создание свинки с начальной позицией (100, 5)
+    std::vector <Bullet> bullets; // создание вектора для хранения пуль
+    
     // инициализация переднего и заднего буферов
     for (int i = 0; i < screenWidth * screenHeight; i++)
     {
@@ -42,10 +48,20 @@ int main()
                     ship.moveRight(); // переместить корабль вправо
                 }
             }
+            if (key == ' ') // если нажата клавиша пробела (выстрел)
+            {
+                bullets.push_back(Bullet(ship.x, ship.y)); // создание новой пули с начальной позицией в корабле и скоростью (0, -1)
+            }
         }
         
         //перемещение свинки 
         svinka1.moving();
+
+        //перемещение пули
+        for (Bullet& bullet : bullets){
+            bullet.shot();
+            bullet.drawBullet();
+        }
         
         // Отображение игрового экрана
         ship.draw(); // отобразить корабль на экране
