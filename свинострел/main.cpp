@@ -3,7 +3,7 @@
 #include "ship.h"
 #include "renderer.h"
 #include "Svin.h"
-#unclude "bullet.h"
+#include "bullet.h"
 #include <vector>
 
 int main()
