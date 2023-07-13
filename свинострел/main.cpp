@@ -41,7 +41,7 @@ int main()
             switch (iItem)
             {
             case 1:
-                printf("Run 1-st item of menu\n");
+                printf("Запуск игры\n");
                 break;
             case 2:
                 printf("Run 2-nd item of menu\n");
