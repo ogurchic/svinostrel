@@ -2,7 +2,7 @@
 #ifndef PIG_H
 #define PIG_H
 
-const int pigHitX = 8, pigHitY = 4; // хитбокс
+const int pigHitX = 14, pigHitY = 9; // хитбокс
 
 class Pig
 {
