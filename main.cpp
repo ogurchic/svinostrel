@@ -9,19 +9,19 @@
 
 bool operator==(const Bullet& lhs, const Bullet& rhs) {
     return lhs.bullet_x == rhs.bullet_x && lhs.bullet_y == rhs.bullet_y;
- }
+}
 
 int main()
 {
     Ship ship(screenWidth / 2 - 6, screenHeight - 13, 3, shipHitX, shipHitY); // создание корабля с начальной позицией (10, 10)
-    Pig pig(30, 5, pigHitX, pigHitY, 10); // создание свинки с начальной позицией (100, 5)
+    std::vector <Pig> pigs;
     std::vector <Bullet> bullets; // создание вектора для хранения пуль
-    //std::vector <Pig> pigs;
 
     int score = 0;
 
     DWORD lastCollisionTime = 0;
     DWORD lastBulletStartTime = 0;
+    DWORD lastPigStartTime = 0;
 
 
     // инициализация переднего и заднего буферов
@@ -36,8 +36,11 @@ int main()
 
     while (ship.health_lvl > 0) // бесконечный игровой цикл
     {
-        pig.moving();
-     
+        if (GetTickCount() - lastPigStartTime >= 10000) // если прошло достаточно времени с момента последнего вызова свиньи
+        {
+            pigs.push_back(Pig(30, 5, pigHitX, pigHitY, 10)); // создание новой пули с начальной позицией в корабле и скоростью (0, -1)
+            lastPigStartTime = GetTickCount(); // обновление времени последнего выстрела
+        }
 
         if (_kbhit()) // если игрок нажал клавишу
         {
@@ -71,28 +74,56 @@ int main()
                 }
             }
         }
-        
-        if (checkCollision(ship.x, ship.y, shipHitX, shipHitY, pig.X, pig.Y, pigHitX, pigHitY)) {
-            if (GetTickCount() - lastCollisionTime > 1000) {
-                ship.healthDown();
-                lastCollisionTime = GetTickCount(); // обновите время последнего столкновения
+
+        for (Pig& pig : pigs) // поведение при столкновении свиньи и корабля
+        {
+            if (checkCollision(ship.x, ship.y, shipHitX, shipHitY, pig.X, pig.Y, pigHitX, pigHitY)) {
+                if (GetTickCount() - lastCollisionTime > 1000) {
+                    ship.healthDown();
+                    lastCollisionTime = GetTickCount(); // обновите время последнего столкновения
+                }
             }
         }
+        
 
         // Отображение игрового экрана
+
         ship.draw(); // отобразить корабль на экране
-        pig.draw(); // отобразить свинку на экране
+
+        for (Pig& pig : pigs) // обход всех свиней в векторе
+        {
+            pig.moving(); // перемещение свиньи
+            pig.draw(); // отображение свиньи на экране
+        }
+
         for (Bullet& bullet : bullets) // обновление позиции и отрисовка всех пуль
         {
             bullet.shot();
             bullet.drawBullet();// Обновите положение пули
 
-            if (checkCollision(bullets.back().bullet_x, bullets.back().bullet_y, bulletHitX, bulletHitY, pig.X, pig.Y, pigHitX, pigHitY)) {
-                // Пуля столкнулась со свиньей
-                bullets.erase(std::remove(bullets.begin(), bullets.end(), bullet), bullets.end());
-                pig.health_down();
+            for (Pig& pig : pigs)
+            {
+                if (checkCollision(bullet.bullet_x, bullet.bullet_y, bulletHitX, bulletHitY, pig.X, pig.Y, pigHitX, pigHitY)) {
+                    bullets.erase(std::remove(bullets.begin(), bullets.end(), bullet), bullets.end());
+                    pig.health_down();
+                }
             }
         }
+        
+        for (auto it = pigs.begin(); it != pigs.end(); ) // обход всех свиней
+        {
+            if (it->health_lvl <= 0) // если здоровье свиньи равно 0 или меньше
+            {
+                it = pigs.erase(it); // удаление свиньи из вектора
+                score++;
+            }
+            else
+            {
+                ++it;
+            }
+        }
+
+
 
         // рамки и контекст
         for (int i = 0; i <= screenWidth; i++) {
@@ -111,7 +142,7 @@ int main()
                     drawString(i, j, scoreText, frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
                 }
                 if (i == screenWidth - 45 && j == 20) {
-                    int num = pig.health_lvl;
+                    int num = pigs.back().health_lvl;
                     std::string str = "Pig`s health level: " + std::to_string(num);
                     const char* cstr = str.c_str();
                     drawString(i, j, cstr, frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
