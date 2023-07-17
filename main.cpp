@@ -39,7 +39,7 @@ int main()
     {
         if (GetTickCount() - lastPigStartTime >= 10000) // если прошло достаточно времени с момента последнего вызова свиньи
         {
-            pigs.push_back(Pig(30, 5, pigHitX, pigHitY, 5)); // создание новой свиньи 
+            pigs.push_back(Pig(0, 0, pigHitX, pigHitY, 5)); // создание новой свиньи 
             lastPigStartTime = GetTickCount(); // обновление времени последнего вывода свиньи
         }
 
@@ -84,6 +84,7 @@ int main()
             {
                 if (GetTickCount() - lastCollisionTime > 1000) { // интервал между потерей хп
                     ship.healthDown(); // потеря хп
+                    pig.health_down();
                     lastCollisionTime = GetTickCount(); // обновите время последнего столкновения
                 }
             }

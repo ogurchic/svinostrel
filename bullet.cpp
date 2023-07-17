@@ -15,5 +15,5 @@ void Bullet::shot() {
 }
 
 void Bullet::drawBullet() {
-	drawString(bullet_x, bullet_y, "*", frontBuffer, FOREGROUND_BLUE);
+	drawString(bullet_x, bullet_y, "*", frontBuffer, FOREGROUND_BLUE | FOREGROUND_GREEN);
 }

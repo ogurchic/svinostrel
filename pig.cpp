@@ -2,6 +2,7 @@
 #include "pig.h"
 #include "renderer.h"
 #include <cmath> 
+#include <math.h>
 
 
 Pig::Pig(int startX, int startY, int hitX, int hitY, int health) // конструктор
@@ -15,12 +16,12 @@ Pig::Pig(int startX, int startY, int hitX, int hitY, int health) // конструктор
 
 void Pig::moving() // перемещение свина
 {
-    if (Y < screenHeight)
-    {
-        Y += round((rand() % 3) * 10) / 200;
-        if (X < screenWidth)
-            X += round((rand() % 3 - 1) * 10) / 200;
-    }
+    //if (Y < screenHeight)
+    //{
+        Y = screenHeight / 2.35 * cos(X / 10) + screenHeight / 2.2;
+        //if (X < screenWidth)
+            X += 0.2;
+    //}
 }
 
 void Pig::draw() // отобразить свина на экране
