@@ -1,16 +1,16 @@
-//svin.cpp
+//pig.cpp
 #include "pig.h"
 #include "renderer.h"
 #include <cmath> 
 
-// МОЖНО ПЕРЕВОДИТЬ В ДАБЛ ПРЯМО ЗДЕСЬ |
-//                                     \/
-Pig::Pig(int startX, int startY, int hitX, int hitY) // конструктор
+
+Pig::Pig(int startX, int startY, int hitX, int hitY, int health) // конструктор
 {
     x = startX;
     y = startY;
     X = x;
     Y = y;
+    health_lvl = health;
 }
 
 void Pig::moving() // перемещение свина
@@ -29,4 +29,9 @@ void Pig::draw() // отобразить свина на экране
     drawString(X, Y + 1, "/      \\", frontBuffer, FOREGROUND_GREEN);
     drawString(X, Y + 2, "|  (oo)|", frontBuffer, FOREGROUND_GREEN);
     drawString(X, Y + 3, "\\  __  /", frontBuffer, FOREGROUND_GREEN);
+}
+
+void Pig::health_down()
+{
+    health_lvl--;
 }

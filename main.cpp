@@ -5,17 +5,23 @@
 #include "bullet.h"
 #include <vector>
 #include "pig.h"
-#include "hitbox.h"
 #include <string>
 
+bool operator==(const Bullet& lhs, const Bullet& rhs) {
+    return lhs.bullet_x == rhs.bullet_x && lhs.bullet_y == rhs.bullet_y;
+ }
 
 int main()
 {
     Ship ship(screenWidth / 2 - 6, screenHeight - 13, 3, shipHitX, shipHitY); // создание корабля с начальной позицией (10, 10)
-    Pig pig(30, 5, pigHitX, pigHitY); // создание свинки с начальной позицией (100, 5)
+    Pig pig(30, 5, pigHitX, pigHitY, 10); // создание свинки с начальной позицией (100, 5)
     std::vector <Bullet> bullets; // создание вектора для хранения пуль
+    //std::vector <Pig> pigs;
+
+    int score = 0;
 
     DWORD lastCollisionTime = 0;
+    DWORD lastBulletStartTime = 0;
 
 
     // инициализация переднего и заднего буферов
@@ -30,9 +36,8 @@ int main()
 
     while (ship.health_lvl > 0) // бесконечный игровой цикл
     {
-        
-        //перемещение свинки 
         pig.moving();
+     
 
         if (_kbhit()) // если игрок нажал клавишу
         {
@@ -59,7 +64,11 @@ int main()
             }
             else if (key == ' ') // если нажата клавиша пробела (выстрел)
             {
-                bullets.push_back(Bullet(ship.x, ship.y)); // создание новой пули с начальной позицией в корабле и скоростью (0, -1)
+                if (GetTickCount() - lastBulletStartTime >= 700) // если прошло достаточно времени с момента последнего выстрела
+                {
+                    bullets.push_back(Bullet(ship.x + 7, ship.y, bulletHitX, bulletHitY)); // создание новой пули с начальной позицией в корабле и скоростью (0, -1)
+                    lastBulletStartTime = GetTickCount(); // обновление времени последнего выстрела
+                }
             }
         }
         
@@ -70,15 +79,21 @@ int main()
             }
         }
 
-        for (Bullet& bullet : bullets) // обновление позиции и отрисовка всех пуль
-        {
-            bullet.shot();
-            bullet.drawBullet();
-        }
-
         // Отображение игрового экрана
         ship.draw(); // отобразить корабль на экране
         pig.draw(); // отобразить свинку на экране
+        for (Bullet& bullet : bullets) // обновление позиции и отрисовка всех пуль
+        {
+            bullet.shot();
+            bullet.drawBullet();// Обновите положение пули
+
+            if (checkCollision(bullets.back().bullet_x, bullets.back().bullet_y, bulletHitX, bulletHitY, pig.X, pig.Y, pigHitX, pigHitY)) {
+                // Пуля столкнулась со свиньей
+                bullets.erase(std::remove(bullets.begin(), bullets.end(), bullet), bullets.end());
+                pig.health_down();
+            }
+        }
+
         // рамки и контекст
         for (int i = 0; i <= screenWidth; i++) {
             for (int j = 0; j <= screenHeight; j++) {
@@ -90,9 +105,19 @@ int main()
                     const char* cstr = str.c_str();
                     drawString(i, j, cstr, frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
                 }
+                if (i == screenWidth - 45 && j == 15) {
+                    std::string str = "Your score: " + std::to_string(score);
+                    const char* scoreText = str.c_str();
+                    drawString(i, j, scoreText, frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+                }
+                if (i == screenWidth - 45 && j == 20) {
+                    int num = pig.health_lvl;
+                    std::string str = "Pig`s health level: " + std::to_string(num);
+                    const char* cstr = str.c_str();
+                    drawString(i, j, cstr, frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+                }
             }
         }
-
 
         // обмен местами переднего и заднего буферов
         swapBuffers();
