@@ -24,10 +24,7 @@
     <ClInclude Include="bullet.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="svin.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="hitbox.h">
+    <ClInclude Include="pig.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,10 +41,7 @@
     <ClCompile Include="bullet.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="svin.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="hitbox.cpp">
+    <ClCompile Include="pig.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

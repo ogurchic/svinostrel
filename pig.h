@@ -8,12 +8,12 @@ class Pig
 {
 public:
     int x, y; // позиция свина по осям X и Y
-    double X, Y;
-    char health_lvl;
+    double X, Y; // для функции перемещения
+    char health_lvl; // уровень здоровья свиньи
 
     Pig(int startX, int startY, int hitx, int hitY, int health); // конструктор
     void moving(); // перемещение свина (авто)
     void draw(); // отобразить свина на экране
-    void health_down();
+    void health_down(); // уменьшение здоровья
 };
 #endif

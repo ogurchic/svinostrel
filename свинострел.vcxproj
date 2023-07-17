@@ -128,14 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="bullet.h" />
-    <ClInclude Include="hitbox.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="pig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="hitbox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="pig.cpp" />

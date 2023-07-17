@@ -3,7 +3,7 @@
 #define BULLET_H
 #include <vector>
 
-const int bulletHitX = 1, bulletHitY = 1; // хитбокс
+const int bulletHitX = 1, bulletHitY = 1; // хитбокс пули
 
 class Bullet{
 public:
@@ -11,8 +11,8 @@ public:
 
     Bullet(int startX, int startY, int hitX, int hitY); // конструктор
 
-    void shot();
-    void drawBullet();
+    void shot(); // полет пули
+    void drawBullet(); // отрисовка пули
 
 };
 

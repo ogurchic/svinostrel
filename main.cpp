@@ -7,21 +7,21 @@
 #include "pig.h"
 #include <string>
 
-bool operator==(const Bullet& lhs, const Bullet& rhs) {
-    return lhs.bullet_x == rhs.bullet_x && lhs.bullet_y == rhs.bullet_y;
-}
+//bool operator==(const Bullet& lhs, const Bullet& rhs) { // для устранения ошибки
+//    return lhs.bullet_x == rhs.bullet_x && lhs.bullet_y == rhs.bullet_y;
+//}
 
 int main()
 {
     Ship ship(screenWidth / 2 - 6, screenHeight - 13, 3, shipHitX, shipHitY); // создание корабля с начальной позицией (10, 10)
-    std::vector <Pig> pigs;
+    std::vector <Pig> pigs; // 
     std::vector <Bullet> bullets; // создание вектора для хранения пуль
 
-    int score = 0;
+    int score = 0; // 
 
-    DWORD lastCollisionTime = 0;
-    DWORD lastBulletStartTime = 0;
-    DWORD lastPigStartTime = 0;
+    DWORD lastCollisionTime = 0; // 
+    DWORD lastBulletStartTime = 0; // 
+    DWORD lastPigStartTime = 0; //
 
 
     // инициализация переднего и заднего буферов
@@ -34,7 +34,7 @@ int main()
         frontBuffer[i].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED;
     }
 
-    while (ship.health_lvl > 0) // бесконечный игровой цикл
+    while (ship.health_lvl > 0) // игровой цикл
     {
         if (GetTickCount() - lastPigStartTime >= 10000) // если прошло достаточно времени с момента последнего вызова свиньи
         {
