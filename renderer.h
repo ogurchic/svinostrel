@@ -24,4 +24,9 @@ void swapBuffers();
 // функция для отображения содержимого заднего буфера на экране
 void displayBackBuffer();
 
+
+//____________________
+
+bool checkCollision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
+
 #endif

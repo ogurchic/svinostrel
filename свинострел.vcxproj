@@ -131,14 +131,14 @@
     <ClInclude Include="hitbox.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="ship.h" />
-    <ClInclude Include="svin.h" />
+    <ClInclude Include="pig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="hitbox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="svin.cpp" />
+    <ClCompile Include="pig.cpp" />
     <ClCompile Include="ship.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

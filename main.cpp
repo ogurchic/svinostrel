@@ -4,16 +4,19 @@
 #include "renderer.h"
 #include "bullet.h"
 #include <vector>
-#include "svin.h"
+#include "pig.h"
 #include "hitbox.h"
-
+#include <string>
 
 
 int main()
 {
-    Ship ship(screenWidth / 2 - 6, screenHeight - 13, 3); // создание корабля с начальной позицией (10, 10)
-    Svin svinka1(10, 5); // создание свинки с начальной позицией (100, 5)
+    Ship ship(screenWidth / 2 - 6, screenHeight - 13, 3, shipHitX, shipHitY); // создание корабля с начальной позицией (10, 10)
+    Pig pig(30, 5, pigHitX, pigHitY); // создание свинки с начальной позицией (100, 5)
     std::vector <Bullet> bullets; // создание вектора для хранения пуль
+
+    DWORD lastCollisionTime = 0;
+
 
     // инициализация переднего и заднего буферов
     for (int i = 0; i < screenWidth * screenHeight; i++)
@@ -25,17 +28,11 @@ int main()
         frontBuffer[i].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED;
     }
 
-    while (true) // бесконечный игровой цикл
+    while (ship.health_lvl > 0) // бесконечный игровой цикл
     {
-        // рамки
-        for (int i = 0; i <= screenWidth; i++) {
-            for (int j = 0; j <= screenHeight; j++) {
-                if (i == 0 || j == 0 || i == screenWidth - 1 || j == screenHeight - 1 || i == screenWidth - 49) {
-                    drawString(i, j, "*", frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-                }
-            }
-        }
-
+        
+        //перемещение свинки 
+        pig.moving();
 
         if (_kbhit()) // если игрок нажал клавишу
         {
@@ -65,6 +62,13 @@ int main()
                 bullets.push_back(Bullet(ship.x, ship.y)); // создание новой пули с начальной позицией в корабле и скоростью (0, -1)
             }
         }
+        
+        if (checkCollision(ship.x, ship.y, shipHitX, shipHitY, pig.X, pig.Y, pigHitX, pigHitY)) {
+            if (GetTickCount() - lastCollisionTime > 1000) {
+                ship.healthDown();
+                lastCollisionTime = GetTickCount(); // обновите время последнего столкновения
+            }
+        }
 
         for (Bullet& bullet : bullets) // обновление позиции и отрисовка всех пуль
         {
@@ -72,16 +76,26 @@ int main()
             bullet.drawBullet();
         }
 
-        //перемещение свинки 
-        svinka1.moving();
-
         // Отображение игрового экрана
         ship.draw(); // отобразить корабль на экране
-        svinka1.draw(); // отобразить свинку на экране
+        pig.draw(); // отобразить свинку на экране
+        // рамки и контекст
+        for (int i = 0; i <= screenWidth; i++) {
+            for (int j = 0; j <= screenHeight; j++) {
+                if (i == 0 || j == 0 || i == screenWidth - 1 || j == screenHeight - 1 || i == screenWidth - 49)
+                    drawString(i, j, "*", frontBuffer, FOREGROUND_GREEN | FOREGROUND_RED);
+                if (i == screenWidth - 45 && j == 10) {
+                    int num = ship.health_lvl;
+                    std::string str = "Health level: " + std::to_string(num);
+                    const char* cstr = str.c_str();
+                    drawString(i, j, cstr, frontBuffer, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+                }
+            }
+        }
+
 
         // обмен местами переднего и заднего буферов
         swapBuffers();
-
         // отображение содержимого заднего буфера на экране
         displayBackBuffer();
 

@@ -3,7 +3,7 @@
 #include "renderer.h"
 
 
-Ship::Ship(int startX, int startY, char healthLevel) // конструктор
+Ship::Ship(int startX, int startY, char healthLevel, int hitX, int hitY) // конструктор
 {
     x = startX;
     y = startY;
