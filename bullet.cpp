@@ -10,7 +10,7 @@ Bullet::Bullet(int start_x, int start_y, int hitX, int hitY)
 }
 
 void Bullet::shot() {
-	if (bullet_y >= 0)
+	if (bullet_y > 0)
 		bullet_y-=2;
 }
 
