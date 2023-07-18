@@ -41,3 +41,4 @@ void Pig::health_down()
 {
     health_lvl--;
 }
+

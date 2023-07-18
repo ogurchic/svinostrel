@@ -15,5 +15,4 @@ public:
     void drawBullet(); // отрисовка пули
 
 };
-
 #endif

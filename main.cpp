@@ -10,7 +10,9 @@
 bool operator==(const Bullet& lhs, const Bullet& rhs) // для устранения ошибки C2678 бинарный "==": не найден оператор, принимающий левый операнд типа "Bullet"
 {
     return lhs.bullet_x == rhs.bullet_x && lhs.bullet_y == rhs.bullet_y;
+
 }
+
 
 int main()
 {
@@ -109,20 +111,20 @@ int main()
             }
         }
         
-        for (auto it = pigs.begin(); it != pigs.end(); ) // обход всех свиней
+        for (auto it = pigs.begin(); it != pigs.end();) // обход всех свиней 
         {
             if (it->health_lvl <= 0) // если здоровье свиньи равно 0 или меньше
             {
                 it = pigs.erase(it); // удаление свиньи из вектора
                 score++; // увеличение счёта за мервую свинью
             }
+            else if(it->X > screenWidth - 63 || it->X < - 14 || it->Y > screenHeight - 9 || it->Y < - 9)
+                it = pigs.erase(it); // удаление свина после выхода за границу
             else
             {
                 ++it; // переход к следующей свинье
             }
         }
-
-
 
         // рамки и контекст
         for (int i = 0; i <= screenWidth; i++) {
@@ -157,5 +159,6 @@ int main()
         Sleep(1000 / 60); // задержка для управления скоростью игрового цикла
     }
 
+    
     return 0;
 }
