@@ -7,7 +7,7 @@ CHAR_INFO frontBuffer[screenWidth * screenHeight];
 void drawChar(int x, int y, char c, CHAR_INFO* buffer, WORD color)
 {
     buffer[y * screenWidth + x].Char.AsciiChar = c;
-    buffer[y * screenWidth + x].Attributes =  color;
+    buffer[y * screenWidth + x].Attributes = color;
 }
 
 void drawString(int x, int y, const char* str, CHAR_INFO* buffer, WORD color)
@@ -20,10 +20,10 @@ void drawString(int x, int y, const char* str, CHAR_INFO* buffer, WORD color)
 
 void swapBuffers()
 {
-    // копирование содержимого переднего буфера в задний
+    // ??????????? ??????????? ????????? ?????? ? ??????
     memcpy(backBuffer, frontBuffer, sizeof(CHAR_INFO) * screenWidth * screenHeight);
 
-    // очистка переднего буфера
+    // ??????? ????????? ??????
     for (int i = 0; i < screenWidth * screenHeight; i++)
     {
         frontBuffer[i].Char.AsciiChar = ' ';
@@ -42,7 +42,7 @@ void displayBackBuffer()
 
 
 
-//______________столкновение_______________
+//______________????????????_______________
 
 bool checkCollision(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2) {
     if (x1 < x2 + width2 && x1 + width1 > x2 && y1 < y2 + height2 && y1 + height1 > y2) {

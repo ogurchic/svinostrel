@@ -13,6 +13,5 @@ public:
 
     void shot(); // полет пули
     void drawBullet(); // отрисовка пули
-
 };
 #endif

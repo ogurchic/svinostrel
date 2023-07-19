@@ -3,6 +3,7 @@
 #define PIG_H
 
 const int pigHitX = 14, pigHitY = 9; // хитбокс
+const int bigpigHitX = 31, bigpigHitY = 16; // хитбокс
 
 class Pig
 {

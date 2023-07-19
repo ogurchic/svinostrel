@@ -6,6 +6,8 @@
 #include <vector>
 #include "pig.h"
 #include <string>
+#include "bigpig.h"
+
 
 bool operator==(const Bullet& lhs, const Bullet& rhs) // для устранения ошибки C2678 бинарный "==": не найден оператор, принимающий левый операнд типа "Bullet"
 {
@@ -13,12 +15,12 @@ bool operator==(const Bullet& lhs, const Bullet& rhs) // для устранен
 
 }
 
-
 int main()
 {
     Ship ship(screenWidth / 2 - 6, screenHeight - 13, 3, shipHitX, shipHitY); // создание корабля с начальной позицией в центральной нижней части экрана
     std::vector <Pig> pigs; // создание вектора хранения свиней
     std::vector <Bullet> bullets; // создание вектора для хранения пуль
+    BigPig bigpig(screenWidth - 70, screenHeight / 2 - 16, bigpigHitX, bigpigHitY, 10);
 
     int score = 0; // счёт игры
 
@@ -78,7 +80,11 @@ int main()
             }
         }
 
+
+        bigpig.moving();
             // Отображение игрового экрана
+
+        bigpig.draw();
 
         for (Pig& pig : pigs) // побход всех свиней в векторе свиней
         {

@@ -1,7 +1,6 @@
 //bullet.cpp
 #include "bullet.h"
 #include "renderer.h"
-#include "ship.h"
 
 Bullet::Bullet(int start_x, int start_y, int hitX, int hitY)
 {
